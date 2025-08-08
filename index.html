@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humizez AI - Text Humanizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="project image">
+</head>
+<body>
+    <div id="starBackground" class="star-background"></div>
+    <div class="mouse-glow" id="mouseGlow"></div>
+    
+    <div class="container">
+        <!-- Header with Logo and Controls -->
+        <div class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-user-edit"></i></div>
+                    <div class="logo-text">Humizez AI</div>
+                </div>
+                <div class="tagline">Text Humanizer</div>
+            </div>
+            <div class="header-right">
+                <button id="themeToggle" class="icon-btn" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="settingsButton" class="icon-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button id="aboutButton" class="about-btn">About</button>
+            </div>
+        </div>
+
+        <!-- About Modal -->
+        <div id="aboutModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>About Humizez AI</h2>
+                    <span class="close-modal">×</span>
+                </div>
+                <div class="modal-body">
+                    <p>Humizez AI is a tool that transforms robotic AI-generated text into natural, human-sounding content. No more generic AI responses - make your text feel genuinely human-written!</p>
+                    
+                    <h3>Features</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Multiple humanization styles (casual, formal, enthusiastic, thoughtful)</li>
+                        <li><i class="fas fa-check-circle"></i> Adjustable humanization strength</li>
+                        <li><i class="fas fa-check-circle"></i> Text complexity control</li>
+                        <li><i class="fas fa-check-circle"></i> Punctuation customization</li>
+                        <li><i class="fas fa-check-circle"></i> Optional misspellings for authenticity</li>
+                        <li><i class="fas fa-check-circle"></i> Emoji support</li>
+                        <li><i class="fas fa-check-circle"></i> Custom presets</li>
+                        <li><i class="fas fa-check-circle"></i> Privacy-focused (processes text locally)</li>
+                        <li><i class="fas fa-check-circle"></i> Advanced AI detection evasion</li>
+                    </ul>
+                    
+                    <h3>Statistics</h3>
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-number" id="scanCount">--</div>
+                            <div class="stat-label">texts humanized</div>
+                        </div>
+                    </div>
+                    
+                    <div class="version-info">Version 2.0.0 | © 2025 DEXTER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Settings</h2>
+                    <span class="close-modal">×</span>
+                </div>
+                <div class="modal-body">
+                    <div class="settings-section">
+                        <h3>Appearance</h3>
+                        <div class="setting-item">
+                            <label>Theme</label>
+                            <div class="theme-selector">
+                                <button class="theme-btn" data-theme="dark">Dark</button>
+                                <button class="theme-btn" data-theme="light">Light</button>
+                                <button class="theme-btn" data-theme="system">System</button>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label>Animation Effects</label>
+                            <label class="switch">
+                                <input type="checkbox" id="animationToggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>Data & Privacy</h3>
+                        <div class="setting-item">
+                            <label>Save History</label>
+                            <label class="switch">
+                                <input type="checkbox" id="saveHistoryToggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>Analytics</label>
+                            <label class="switch">
+                                <input type="checkbox" id="analyticsToggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <button class="btn btn-danger" onclick="clearAllData()">Clear All Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Presets Modal -->
+        <div id="presetsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Saved Presets</h2>
+                    <span class="close-modal">×</span>
+                </div>
+                <div class="modal-body">
+                    <div id="presetsList" class="presets-list">
+                        <!-- Presets will be loaded here -->
+                        <div class="empty-state">
+                            <i class="fas fa-bookmark"></i>
+                            <p>No presets saved yet. Save your current settings as a preset to see it here.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="preset-form">
+                        <h3>Save Current Settings as Preset</h3>
+                        <div class="input-group">
+                            <input type="text" id="presetName" placeholder="Enter preset name" class="input-field">
+                            <button id="savePresetBtn" class="btn">Save Preset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Humizez AI Interface -->
+        <div class="ai-container">
+            <div class="ai-header">
+                <h2>Humizez AI - Text Humanizer</h2>
+                <div class="ai-actions">
+                    <button id="presetsButton" class="action-btn" title="Saved Presets">
+                        <i class="fas fa-bookmark"></i>
+                    </button>
+                    <button id="clearChatButton" class="action-btn" title="Clear Chat">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                    <div class="ai-status online">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Ready</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-container" id="chatContainer">
+                <!-- Welcome message -->
+                <div class="message ai-message">
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-text">Welcome to Humizez AI! Paste AI-generated text below and I'll make it sound more human. Choose a humanization level to customize the output.</div>
+                        <div class="message-time">
+                            Just now
+                            <button class="copy-btn" title="Copy to clipboard" onclick="copyWelcomeMessage()">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tiered Controls -->
+            <div class="tiered-controls">
+                <h3>Humanization Level</h3>
+                <div class="tier-buttons">
+                    <button id="basicTier" class="tier-btn active" data-tier="basic">
+                        <i class="fas fa-user"></i>
+                        <span>Basic</span>
+                        <small>Light humanization</small>
+                    </button>
+                    <button id="enhancedTier" class="tier-btn" data-tier="enhanced">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Enhanced</span>
+                        <small>Strong humanization</small>
+                    </button>
+                    <button id="undetectableTier" class="tier-btn" data-tier="undetectable">
+                        <i class="fas fa-user-secret"></i>
+                        <span>Undetectable</span>
+                        <small>Maximum evasion</small>
+                    </button>
+                    <button id="maximumEvasionTier" class="tier-btn" data-tier="maximumEvasion">
+                        <i class="fas fa-user-ninja"></i>
+                        <span>GPTZero Bypass</span>
+                        <small>Specialized evasion</small>
+                    </button>
+                    <button id="advancedSettings" class="tier-btn settings">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>Advanced</span>
+                        <small>Custom settings</small>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Advanced Humanizer Controls (hidden by default) -->
+            <div class="humanizer-controls" id="advancedControls" style="display: none;">
+                <div class="controls-row">
+                    <div class="style-selector">
+                        <label>Style:</label>
+                        <select id="humanizeStyle">
+                            <option value="casual">Casual</option>
+                            <option value="formal">Formal</option>
+                            <option value="enthusiastic">Enthusiastic</option>
+                            <option value="thoughtful">Thoughtful</option>
+                        </select>
+                    </div>
+                    <div class="strength-selector">
+                        <label>Strength:</label>
+                        <input type="range" id="humanizeStrength" min="1" max="10" value="8">
+                        <span id="strengthValue">8</span>
+                    </div>
+                </div>
+                
+                <div class="controls-row">
+                    <div class="complexity-selector">
+                        <label>Complexity:</label>
+                        <select id="complexityLevel">
+                            <option value="simple">Simple</option>
+                            <option value="moderate" selected>Moderate</option>
+                            <option value="complex">Complex</option>
+                        </select>
+                    </div>
+                    <div class="punctuation-selector">
+                        <label>Punctuation:</label>
+                        <select id="punctuationLevel">
+                            <option value="normal">Normal</option>
+                            <option value="minimal">Minimal</option>
+                            <option value="none">None</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="controls-row checkboxes">
+                    <div class="option-checkbox">
+                        <input type="checkbox" id="allowMisspellings" checked>
+                        <label for="allowMisspellings">Allow Misspellings</label>
+                    </div>
+                    <div class="option-checkbox">
+                        <input type="checkbox" id="allowEmojis">
+                        <label for="allowEmojis">Add Emojis</label>
+                    </div>
+                    <button id="savePresetButton" class="preset-btn">
+                        <i class="fas fa-save"></i> Save Preset
+                    </button>
+                </div>
+            </div>
+            
+            <div class="input-area">
+                <textarea id="userInput" class="chat-input" placeholder="Paste AI-generated text here..." rows="3"></textarea>
+                <button id="sendButton" class="send-btn">
+                    <i class="fas fa-magic"></i>
+                </button>
+            </div>
+            
+            <div class="ai-features">
+                <div class="feature-item">
+                    <i class="fas fa-user"></i>
+                    <span>Human Touch</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bolt"></i>
+                    <span>Fast Processing</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Privacy Focused</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-eye-slash"></i>
+                    <span>AI Detection Evasion</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example Section -->
+        <div class="example-section">
+            <h3>See the Difference</h3>
+            <div class="example-container">
+                <div class="example-box">
+                    <h4>Original AI Text</h4>
+                    <p class="example-text">The process of photosynthesis is a biological mechanism through which plants convert light energy into chemical energy. This energy is subsequently utilized for the synthesis of glucose from carbon dioxide and water, with oxygen being released as a byproduct.</p>
+                </div>
+                <div class="example-box">
+                    <h4>Humanized Text</h4>
+                    <p class="example-text">So, photosynthesis is basically how plants turn light into energy. They use this energy to make glucose from CO2 and water, and they release oxygen in the process. Pretty cool, right?</p>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-text">MADE BY DE<span class="rgb-star">💫</span>TER</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="text-analyzer.js"></script>
+    <script src="writing-styles.js"></script>
+    <script src="ai-detector-evasion.js"></script>
+    <script src="humanizer-engine.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
