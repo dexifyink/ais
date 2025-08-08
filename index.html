@@ -6,10 +6,47 @@
     <meta name="theme-color" content="#0f0f23">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>DEX BYPASS - Text Humanizer</title>
+    <title>DEX BYPASS - AI Text Humanizer | Evade AI Detection</title>
+    <meta name="description" content="DEX BYPASS - Transform AI-generated text into natural, human-sounding content. Evade AI detection with our advanced text humanizer tool. Free and privacy-focused.">
+    <meta name="keywords" content="DEX BYPASS, text humanizer, AI detection evasion, humanize AI text, bypass AI detection, GPTZero bypass, AI text converter">
+    <meta name="author" content="DEXTER">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="DEX BYPASS - Advanced Text Humanizer Tool">
+    <meta property="og:description" content="Transform AI-generated text into natural, human-sounding content. Evade AI detection with our advanced text humanizer.">
+    <meta property="og:url" content="https://dexbypass.net/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://dexbypass.net/dexbypass-preview.jpg">
+    <link rel="canonical" href="https://dexbypass.net/">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="project image">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8b5cf6">
+    <meta name="msapplication-TileColor" content="#0f0f23">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "DEX BYPASS",
+      "url": "https://dexbypass.net/",
+      "description": "Transform AI-generated text into natural, human-sounding content. Evade AI detection with our advanced text humanizer tool.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Person",
+        "name": "DEXTER"
+      },
+      "featureList": "Multiple humanization styles, Adjustable strength, Text complexity control, AI detection evasion",
+      "screenshot": "https://dexbypass.net/dexbypass-preview.jpg"
+    }
+    </script>
 </head>
 <body>
     <!-- Splash Screen -->
@@ -161,9 +198,9 @@
         </div>
 
         <!-- DEX BYPASS Interface -->
-        <div class="ai-container">
+        <div class="ai-container" role="main" aria-label="DEX BYPASS Text Humanizer Tool">
             <div class="ai-header">
-                <h2>DEX BYPASS - Text Humanizer</h2>
+                <h1>DEX BYPASS - Text Humanizer</h1>
                 <div class="ai-actions">
                     <button id="presetsButton" class="action-btn" title="Saved Presets">
                         <i class="fas fa-bookmark"></i>
@@ -317,8 +354,8 @@
         </div>
 
         <!-- Example Section -->
-        <div class="example-section">
-            <h3>See the Difference</h3>
+        <div class="example-section" id="examples" aria-labelledby="examples-heading">
+            <h3 id="examples-heading">See the Difference</h3>
             <div class="example-container">
                 <div class="example-box">
                     <h4>Original AI Text</h4>
@@ -347,5 +384,14 @@
     <script src="ai-detector-evasion.js"></script>
     <script src="humanizer-engine.js"></script>
     <script src="scripts.js"></script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX'); // Replace with your Google Analytics ID
+    </script>
 </body>
 </html>

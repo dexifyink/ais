@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Search Console Setup - DEX BYPASS</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #8b5cf6;
+        }
+        .step {
+            margin-bottom: 30px;
+        }
+        img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        code {
+            background: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .note {
+            background-color: #e0f2fe;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Search Console Setup for DEX BYPASS</h1>
+    <p>Follow these steps to set up Google Search Console for your website. This is crucial for getting your site indexed by Google and tracking its performance in search results.</p>
+    
+    <div class="step">
+        <h2>Step 1: Access Google Search Console</h2>
+        <p>Go to <a href="https://search.google.com/search-console" target="_blank">Google Search Console</a> and sign in with your Google account.</p>
+    </div>
+    
+    <div class="step">
+        <h2>Step 2: Add Your Property</h2>
+        <p>Click on "Add Property" and select "URL prefix" as the property type.</p>
+        <p>Enter your website URL: <code>https://dexbypass.net/</code></p>
+    </div>
+    
+    <div class="step">
+        <h2>Step 3: Verify Ownership</h2>
+        <p>You'll need to verify that you own the website. Google offers several verification methods:</p>
+        <ol>
+            <li><strong>HTML file upload</strong>: Download the HTML file provided by Google and upload it to your website's root directory.</li>
+            <li><strong>HTML tag</strong>: Add the meta tag provided by Google to the <code><head></code> section of your homepage.</li>
+            <li><strong>DNS record</strong>: Add the TXT record provided by Google to your domain's DNS configuration.</li>
+            <li><strong>Google Analytics</strong>: If you already have Google Analytics set up, you can use this method.</li>
+            <li><strong>Google Tag Manager</strong>: If you use Google Tag Manager, you can verify through it.</li>
+        </ol>
+        <p>The HTML tag method is often the easiest. Copy the meta tag provided by Google and add it to the <code><head></code> section of your index.html file.</p>
+        <div class="note">
+            <p><strong>Note:</strong> After adding the verification method, click "Verify" in Google Search Console. It may take a few moments to verify.</p>
+        </div>
+    </div>
+    
+    <div class="step">
+        <h2>Step 4: Submit Your Sitemap</h2>
+        <p>Once verified, go to "Sitemaps" in the left sidebar.</p>
+        <p>Enter <code>sitemap.xml</code> in the field and click "Submit".</p>
+        <div class="note">
+            <p><strong>Note:</strong> Make sure your sitemap.xml file is accessible at <code>https://dexbypass.net/sitemap.xml</code> before submitting.</p>
+        </div>
+    </div>
+    
+    <div class="step">
+        <h2>Step 5: Request Indexing</h2>
+        <p>To speed up the indexing process:</p>
+        <ol>
+            <li>Go to "URL Inspection" in the left sidebar.</li>
+            <li>Enter your homepage URL: <code>https://dexbypass.net/</code></li>
+            <li>Click "Request Indexing".</li>
+        </ol>
+    </div>
+    
+    <div class="step">
+        <h2>Step 6: Monitor Performance</h2>
+        <p>Check back regularly to monitor:</p>
+        <ul>
+            <li><strong>Coverage</strong>: Ensure your pages are being indexed without errors.</li>
+            <li><strong>Performance</strong>: Track how your site appears in search results.</li>
+            <li><strong>Enhancements</strong>: Check for any enhancement opportunities.</li>
+            <li><strong>Manual Actions</strong>: Ensure your site hasn't received any penalties.</li>
+        </ul>
+    </div>
+    
+    <div class="step">
+        <h2>Step 7: Set Up Search Appearance</h2>
+        <p>In the "Search Appearance" section, you can see how your site appears in search results and make improvements if needed.</p>
+    </div>
+    
+    <div class="note">
+        <p><strong>Important:</strong> It may take several days or even weeks for Google to fully index your site after submission. Be patient and check back regularly.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f0f23">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Page Not Found - DEX BYPASS</title>
+    <meta name="description" content="Page not found. Return to DEX BYPASS - the advanced text humanizer tool that transforms AI-generated text into natural, human-sounding content.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+            text-align: center;
+            padding: 20px;
+        }
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .error-message {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+        }
+        .home-button {
+            padding: 12px 24px;
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .home-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div id="starBackground" class="star-background"></div>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-user-edit"></i></div>
+                    <div class="logo-text">DEX BYPASS</div>
+                </div>
+                <div class="tagline">Text Humanizer</div>
+            </div>
+        </div>
+        
+        <div class="error-container">
+            <div class="error-code">404</div>
+            <div class="error-message">Oops! This page doesn't exist.</div>
+            <a href="/" class="home-button">Return to Homepage</a>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-text">MADE BY DE<span class="rgb-star">💫</span>TER</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Create star background
+        document.addEventListener('DOMContentLoaded', () => {
+            const starBackground = document.getElementById('starBackground');
+            if (!starBackground) return;
+            
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const starCount = Math.floor((windowWidth * windowHeight) / 10000);
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const x = Math.random() * windowWidth;
+                const y = Math.random() * windowHeight;
+                const size = Math.random() * (windowWidth / 500) + 1;
+                const duration = Math.random() * 5 + 3;
+                const delay = Math.random() * 5;
+                const brightness = Math.random() * 0.7 + 0.3;
+                
+                star.style.cssText = `
+                    left: ${x}px;
+                    top: ${y}px;
+                    width: ${size}px;
+                    height: ${size}px;
+                    --duration: ${duration}s;
+                    --delay: ${delay}s;
+                    --brightness: ${brightness};
+                `;
+                
+                starBackground.appendChild(star);
+            }
+        });
+    </script>
+</body>
+</html>
