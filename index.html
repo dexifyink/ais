@@ -2,13 +2,28 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f0f23">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Humizez AI - Text Humanizer</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="project image">
 </head>
 <body>
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <div class="logo-icon splash-logo"><i class="fas fa-user-edit"></i></div>
+            <div class="logo-text splash-text">Humizez AI</div>
+            <div class="splash-tagline">Text Humanizer</div>
+            <div class="splash-loader">
+                <div class="splash-loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
     <div id="starBackground" class="star-background"></div>
     <div class="mouse-glow" id="mouseGlow"></div>
     
@@ -210,6 +225,14 @@
                         <span>Advanced</span>
                         <small>Custom settings</small>
                     </button>
+                </div>
+                
+                <!-- Tier Options -->
+                <div class="tier-options">
+                    <div class="option-checkbox">
+                        <input type="checkbox" id="tierMisspellingsToggle">
+                        <label for="tierMisspellingsToggle">Allow Misspellings</label>
+                    </div>
                 </div>
             </div>
             

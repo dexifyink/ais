@@ -760,7 +760,7 @@ const Humanizer = {
     addHumanMarkers(text, settings) {
         let result = text;
         
-        // Add typos based on strength
+        // Add typos based on strength and only if allowed
         if (settings.allowTypos && settings.strength > 3) {
             result = this.addTypos(result, settings.strength);
         }
@@ -1231,11 +1231,19 @@ const HumanizerEngine = {
                 // Then enhance perplexity
                 result = AIDetectorEvasion.enhancePerplexity(result);
                 
-                // Finally add human markers
-                result = AIDetectorEvasion.addHumanMarkers(result, {
-                    allowTypos: true,
-                    strength: 10
-                });
+                // Only add human markers with typos if allowed
+                if (options.allowMisspellings) {
+                    result = AIDetectorEvasion.addHumanMarkers(result, {
+                        allowTypos: true,
+                        strength: 10
+                    });
+                } else {
+                    // Add human markers without typos
+                    result = AIDetectorEvasion.addHumanMarkers(result, {
+                        allowTypos: false,
+                        strength: 10
+                    });
+                }
                 
                 return result;
             }
@@ -1245,7 +1253,7 @@ const HumanizerEngine = {
             let result = Humanizer.humanize(text, {
                 strength: options.strength || 7,
                 style: options.style || 'casual',
-                allowTypos: options.allowMisspellings !== undefined ? options.allowMisspellings : true,
+                allowTypos: options.allowMisspellings !== undefined ? options.allowMisspellings : false, // Explicitly use the option
                 allowEmojis: options.allowEmojis !== undefined ? options.allowEmojis : false,
                 gptzeroMode: true
             });
@@ -1253,7 +1261,8 @@ const HumanizerEngine = {
             // Apply additional evasion techniques
             if (options.strength > 6) {
                 result = AIDetectorEvasion.applyEvasionTechniques(result, {
-                    strength: options.strength
+                    strength: options.strength,
+                    allowTypos: options.allowMisspellings // Pass the misspellings setting
                 });
             }
             

@@ -1453,3 +1453,356 @@ input:checked + .slider:before {
     justify-content: flex-end;
     gap: 5px;
 }
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .ai-container {
+        height: auto;
+        min-height: 500px;
+    }
+    
+    .chat-container {
+        height: 400px;
+        max-height: 60vh;
+    }
+    
+    .tier-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .tier-btn {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 15px;
+        width: 100%;
+    }
+    
+    .tier-btn i {
+        margin-right: 10px;
+    }
+    
+    .tier-btn span {
+        flex: 1;
+        text-align: left;
+    }
+    
+    .tier-btn small {
+        text-align: right;
+    }
+    
+    .controls-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .style-selector, .strength-selector, .complexity-selector, .punctuation-selector {
+        width: 100%;
+    }
+    
+    .input-area {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .chat-input {
+        width: 100%;
+    }
+    
+    .send-btn {
+        width: 100%;
+        height: 40px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .example-container {
+        flex-direction: column;
+    }
+    
+    /* Fix message display on mobile */
+    .message {
+        max-width: 95%;
+    }
+    
+    /* Adjust copy button for better touch targets */
+    .copy-btn {
+        padding: 5px 10px;
+        font-size: 16px;
+    }
+    
+    /* Fix footer on mobile */
+    .footer {
+        padding: 10px;
+    }
+}
+
+/* Splash Screen */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.splash-logo {
+    width: 80px;
+    height: 80px;
+    font-size: 40px;
+    animation: pulse 2s infinite;
+}
+
+.splash-text {
+    font-size: 2.5rem;
+    margin-top: 10px;
+}
+
+.splash-tagline {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.splash-loader {
+    width: 200px;
+    height: 4px;
+    background: rgba(139, 92, 246, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.splash-loader-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: var(--accent-gradient);
+    border-radius: 4px;
+    animation: loadingBar 2s ease-out forwards;
+}
+
+@keyframes loadingBar {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Copy button styles */
+.copy-btn {
+    background: none;
+    border: none;
+    color: var(--accent-secondary);
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 8px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+}
+
+.copy-btn:hover {
+    background: rgba(139, 92, 246, 0.1);
+    opacity: 1;
+}
+
+.copy-btn.copied {
+    color: var(--success);
+    opacity: 1;
+}
+
+.message-time {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 5px;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+/* Tier Options */
+.tier-options {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+}
+
+.tier-options .option-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tier-options .option-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent-primary);
+}
+
+.tier-options .option-checkbox label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .ai-container {
+        height: auto;
+        min-height: 500px;
+    }
+    
+    .chat-container {
+        height: 400px;
+        max-height: 60vh;
+    }
+    
+    .tier-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .tier-btn {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 15px;
+        width: 100%;
+    }
+    
+    .tier-btn i {
+        margin-right: 10px;
+    }
+    
+    .tier-btn span {
+        flex: 1;
+        text-align: left;
+    }
+    
+    .tier-btn small {
+        text-align: right;
+    }
+    
+    .controls-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .style-selector, .strength-selector, .complexity-selector, .punctuation-selector {
+        width: 100%;
+    }
+    
+    .input-area {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .chat-input {
+        width: 100%;
+    }
+    
+    .send-btn {
+        width: 100%;
+        height: 40px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .example-container {
+        flex-direction: column;
+    }
+    
+    /* Fix message display on mobile */
+    .message {
+        max-width: 95%;
+    }
+    
+    /* Adjust copy button for better touch targets */
+    .copy-btn {
+        padding: 5px 10px;
+        font-size: 16px;
+    }
+    
+    /* Fix footer on mobile */
+    .footer {
+        padding: 10px;
+    }
+    
+    .tier-options {
+        justify-content: flex-start;
+        padding-left: 10px;
+    }
+}
+
+/* Fix for iPhone notch */
+@supports (padding: max(0px)) {
+    .container {
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+    }
+    
+    .footer {
+        padding-bottom: max(15px, env(safe-area-inset-bottom));
+    }
+}

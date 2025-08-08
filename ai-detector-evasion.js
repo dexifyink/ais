@@ -7,7 +7,7 @@ const AIDetectorEvasion = {
     // Core evasion function
     applyEvasionTechniques(text, options) {
         try {
-            const { strength = 5 } = options;
+            const { strength = 5, allowTypos = false } = options;
             
             // First, analyze the text structure
             const analysis = this.analyzeTextPatterns(text);
@@ -25,12 +25,12 @@ const AIDetectorEvasion = {
             }
             
             if (analysis.tooConsistent) {
-                result = this.breakConsistentPatterns(result, strength);
+                result = this.breakConsistentPatterns(result, strength, allowTypos);
             }
             
             // Apply aggressive transformations for high strength settings
             if (strength > 7) {
-                result = this.applyAggressiveEvasion(result);
+                result = this.applyAggressiveEvasion(result, allowTypos);
             }
             
             // Enhance burstiness for better evasion
@@ -989,7 +989,7 @@ const AIDetectorEvasion = {
     },
     
     // Break consistent patterns that GPTZero detects
-    breakConsistentPatterns(text, strength) {
+    breakConsistentPatterns(text, strength, allowTypos = false) {
         try {
             let result = text;
             
@@ -998,8 +998,8 @@ const AIDetectorEvasion = {
                 result = this.varyCapitalization(result);
             }
             
-            // Add occasional typos
-            if (strength > 6) {
+            // Add occasional typos only if allowed
+            if (allowTypos && strength > 6) {
                 result = this.addTypos(result);
             }
             
@@ -1187,7 +1187,7 @@ const AIDetectorEvasion = {
     },
     
     // Apply aggressive evasion techniques for maximum GPTZero evasion
-    applyAggressiveEvasion(text) {
+    applyAggressiveEvasion(text, allowTypos = false) {
         try {
             // These techniques are more noticeable but highly effective against GPTZero
             let result = text;
@@ -1195,8 +1195,10 @@ const AIDetectorEvasion = {
             // Add stream-of-consciousness elements
             result = this.addStreamOfConsciousness(result);
             
-            // Add human-like errors and corrections
-            result = this.addHumanErrors(result);
+            // Add human-like errors and corrections only if typos are allowed
+            if (allowTypos) {
+                result = this.addHumanErrors(result);
+            }
             
             // Break AI-like sentence structures
             result = this.breakAISentenceStructures(result);

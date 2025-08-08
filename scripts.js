@@ -3,11 +3,24 @@ let settings = {
     theme: 'dark',
     animations: true,
     saveHistory: true,
-    analytics: true
+    analytics: true,
+    tierMisspellings: false // New setting for tier misspellings toggle
 };
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
+    // Show splash screen for 2 seconds
+    const splashScreen = document.getElementById('splashScreen');
+    
+    setTimeout(() => {
+        if (splashScreen) {
+            splashScreen.style.opacity = '0';
+            setTimeout(() => {
+                splashScreen.style.visibility = 'hidden';
+            }, 500);
+        }
+    }, 2000);
+    
     // Create star background
     createStarBackground();
     
@@ -894,7 +907,7 @@ function initializeTierControls() {
                 strength: 7,
                 complexity: 'moderate',
                 punctuation: 'normal',
-                allowMisspellings: true,
+                allowMisspellings: false, // Changed to false by default
                 allowEmojis: false
             },
             undetectable: {
@@ -902,17 +915,16 @@ function initializeTierControls() {
                 strength: 9,
                 complexity: 'moderate',
                 punctuation: 'normal',
-                allowMisspellings: true,
+                allowMisspellings: false, // Changed to false by default
                 allowEmojis: true
             },
             maximumEvasion: {
                 style: 'casual',
                 strength: 10,
-                complexity: 'simple', // Simple is actually better for evasion
-                punctuation: 'minimal', // Less consistent punctuation helps evade
-                allowMisspellings: true,
+                complexity: 'simple',
+                punctuation: 'minimal',
+                allowMisspellings: false, // Changed to false by default
                 allowEmojis: false,
-                // New specialized settings
                 useExtremeBurstiness: true,
                 usePerplexityEnhancement: true,
                 addHumanMarkers: true,
@@ -987,6 +999,35 @@ function initializeTierControls() {
             });
         }
         
+        // Set up misspellings toggle for tiers
+        const tierMisspellingsToggle = document.getElementById('tierMisspellingsToggle');
+        if (tierMisspellingsToggle) {
+            // Initialize toggle state from settings
+            if (settings.tierMisspellings !== undefined) {
+                tierMisspellingsToggle.checked = settings.tierMisspellings;
+            }
+            
+            tierMisspellingsToggle.addEventListener('change', function() {
+                // Save the setting
+                settings.tierMisspellings = this.checked;
+                saveSettings();
+                
+                // Update the current tier config
+                const currentTier = settings.currentTier || 'basic';
+                if (currentTier !== 'custom' && tierConfigs[currentTier]) {
+                    tierConfigs[currentTier].allowMisspellings = this.checked;
+                    
+                    // Update the UI if advanced controls are visible
+                    const allowMisspellings = document.getElementById('allowMisspellings');
+                    if (allowMisspellings && advancedControls && advancedControls.style.display !== 'none') {
+                        allowMisspellings.checked = this.checked;
+                    }
+                }
+                
+                showNotification(`Misspellings ${this.checked ? 'enabled' : 'disabled'} for humanization`, 'info');
+            });
+        }
+        
         // Apply saved tier or default to basic
         const currentTier = settings.currentTier || 'basic';
         if (currentTier === 'custom') {
@@ -1055,92 +1096,96 @@ function initializeChat() {
         // Send button click
         sendButton.addEventListener('click', processText);
                 
-        function processText() {
-            try {
-                const text = userInput.value.trim();
-                if (!text) {
-                    showNotification('Please enter some text to humanize', 'warning');
-                    return;
-                }
+    function processText() {
+        try {
+            const text = userInput.value.trim();
+            if (!text) {
+                showNotification('Please enter some text to humanize', 'warning');
+                return;
+            }
+            
+            // Add original text to chat
+            addMessage(text, 'user');
+            
+            // Clear input
+            userInput.value = '';
+            userInput.style.height = 'auto';
+            
+            // Show processing indicator
+            showProcessingIndicator();
+            
+            // Get all selected options
+            const currentTier = settings.currentTier || 'basic';
+            let options;
+            
+            if (currentTier === 'custom') {
+                // Use advanced controls
+                const humanizeStyle = document.getElementById('humanizeStyle');
+                const humanizeStrength = document.getElementById('humanizeStrength');
+                const complexityLevel = document.getElementById('complexityLevel');
+                const punctuationLevel = document.getElementById('punctuationLevel');
+                const allowMisspellings = document.getElementById('allowMisspellings');
+                const allowEmojis = document.getElementById('allowEmojis');
                 
-                // Add original text to chat
-                addMessage(text, 'user');
+                options = {
+                    style: humanizeStyle ? humanizeStyle.value : 'casual',
+                    strength: humanizeStrength ? parseInt(humanizeStrength.value) : 5,
+                    complexity: complexityLevel ? complexityLevel.value : 'moderate',
+                    punctuation: punctuationLevel ? punctuationLevel.value : 'normal',
+                    allowMisspellings: allowMisspellings ? allowMisspellings.checked : false,
+                    allowEmojis: allowEmojis ? allowEmojis.checked : false
+                };
+            } else {
+                // Use tier configuration with explicit misspellings setting from the toggle
+                const tierMisspellingsToggle = document.getElementById('tierMisspellingsToggle');
+                const allowMisspellings = tierMisspellingsToggle ? tierMisspellingsToggle.checked : false;
                 
-                // Clear input
-                userInput.value = '';
-                userInput.style.height = 'auto';
+                const tierConfigs = {
+                    basic: {
+                        style: 'casual',
+                        strength: 4,
+                        complexity: 'simple',
+                        punctuation: 'normal',
+                        allowMisspellings: allowMisspellings, // Use the toggle value directly
+                        allowEmojis: false,
+                        tier: 'basic'
+                    },
+                    enhanced: {
+                        style: 'casual',
+                        strength: 7,
+                        complexity: 'moderate',
+                        punctuation: 'normal',
+                        allowMisspellings: allowMisspellings, // Use the toggle value directly
+                        allowEmojis: false,
+                        tier: 'enhanced'
+                    },
+                    undetectable: {
+                        style: 'casual',
+                        strength: 9,
+                        complexity: 'moderate',
+                        punctuation: 'normal',
+                        allowMisspellings: allowMisspellings, // Use the toggle value directly
+                        allowEmojis: true,
+                        tier: 'undetectable'
+                    },
+                    maximumEvasion: {
+                        style: 'casual',
+                        strength: 10,
+                        complexity: 'simple',
+                        punctuation: 'minimal',
+                        allowMisspellings: allowMisspellings, // Use the toggle value directly
+                        allowEmojis: false,
+                        tier: 'maximumEvasion',
+                        useExtremeBurstiness: true,
+                        usePerplexityEnhancement: true,
+                        addHumanMarkers: true,
+                        addSelfReferences: true
+                    }
+                };
                 
-                // Show processing indicator
-                showProcessingIndicator();
-                
-                // Get all selected options
-                const currentTier = settings.currentTier || 'basic';
-                let options;
-                
-                if (currentTier === 'custom') {
-                    // Use advanced controls
-                    const humanizeStyle = document.getElementById('humanizeStyle');
-                    const humanizeStrength = document.getElementById('humanizeStrength');
-                    const complexityLevel = document.getElementById('complexityLevel');
-                    const punctuationLevel = document.getElementById('punctuationLevel');
-                    const allowMisspellings = document.getElementById('allowMisspellings');
-                    const allowEmojis = document.getElementById('allowEmojis');
-                    
-                    options = {
-                        style: humanizeStyle ? humanizeStyle.value : 'casual',
-                        strength: humanizeStrength ? parseInt(humanizeStrength.value) : 5,
-                        complexity: complexityLevel ? complexityLevel.value : 'moderate',
-                        punctuation: punctuationLevel ? punctuationLevel.value : 'normal',
-                        allowMisspellings: allowMisspellings ? allowMisspellings.checked : false,
-                        allowEmojis: allowEmojis ? allowEmojis.checked : false
-                    };
-                } else {
-                    // Use tier configuration
-                    const tierConfigs = {
-                        basic: {
-                            style: 'casual',
-                            strength: 4,
-                            complexity: 'simple',
-                            punctuation: 'normal',
-                            allowMisspellings: false,
-                            allowEmojis: false,
-                            tier: 'basic'
-                        },
-                        enhanced: {
-                            style: 'casual',
-                            strength: 7,
-                            complexity: 'moderate',
-                            punctuation: 'normal',
-                            allowMisspellings: true,
-                            allowEmojis: false,
-                            tier: 'enhanced'
-                        },
-                        undetectable: {
-                            style: 'casual',
-                            strength: 9, // Changed from 10 to 9 for better stability
-                            complexity: 'moderate',
-                            punctuation: 'normal',
-                            allowMisspellings: true,
-                            allowEmojis: true,
-                            tier: 'undetectable'
-                        },
-                        maximumEvasion: {
-                            style: 'casual',
-                            strength: 10,
-                            complexity: 'simple',
-                            punctuation: 'minimal',
-                            allowMisspellings: true,
-                            allowEmojis: false,
-                            tier: 'maximumEvasion',
-                            useExtremeBurstiness: true,
-                            usePerplexityEnhancement: true,
-                            addHumanMarkers: true,
-                            addSelfReferences: true
-                        }
-                    };
-                    
-                    options = tierConfigs[currentTier] || tierConfigs.basic;
-                }
+                options = tierConfigs[currentTier] || tierConfigs.basic;
+            }
+        
                 
                 // Process with slight delay to show the processing indicator
                 setTimeout(() => {
